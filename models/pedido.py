@@ -7,7 +7,5 @@ class Pedido(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     valor_total = Column(Float, nullable=False)
-
     id_cliente = Column(Integer, ForeignKey('clientes.id'))
-
     status = Column(String(20), nullable=False, default='PENDENTE')
