@@ -1,5 +1,7 @@
 from interface.menu_produto import menu_produto
-from services import produto_service
+from interface.menu_cliente import menu_cliente
+
+from services import produto_service, cliente_service
 
 
 def menu():
@@ -15,12 +17,17 @@ def menu():
             opc = int(input('Digite sua opção: '))
 
         except ValueError:
-            print('Digite um número válido')
+            print('ERRO: Digite um número válido')
             continue
 
         if opc == 1:
             menu_produto(produto_service)
+        
+        if opc == 4:
+            menu_cliente(cliente_service)
 
         elif opc == 5:
             print('Saindo do sistema.. Volte sempre.')
             break
+        else:
+            print('ERRO: Digite uma opção válida.')

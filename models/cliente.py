@@ -8,4 +8,4 @@ class Cliente(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String(50), nullable=False)
-    telefone = Column(String(20), nullable=False)
+    telefone = Column(String(30), unique=True, nullable=False)
