@@ -4,7 +4,6 @@
 ![MySQL](https://img.shields.io/badge/MySQL-Database-blue?logo=mysql)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red)
 ![Status](https://img.shields.io/badge/status-concluído-green)
-![License](https://img.shields.io/badge/license-MIT-green)
 
 Sistema backend desenvolvido em Python para gerenciamento de clientes, produtos, pedidos e controle de estoque utilizando SQLAlchemy ORM e MySQL.
 
