@@ -28,21 +28,35 @@ def menu_cliente(cliente_service):
                 print(f'Erro ao cadastrar cliente: {erro}')
                 continue
 
-            cliente_service.cadastrar_cliente(nome, telefone)
+            resultado = cliente_service.cadastrar_cliente(nome, telefone)
+            print(resultado['mensagem'])
+
 
         elif sub == 2:
-            cliente_service.listar_clientes()
+            resultado = cliente_service.listar_clientes()
+
+            if not resultado['sucesso']:
+                print(resultado['mensagem'])
+
+            else:
+                for cliente in resultado['dados']:
+                    print(f'ID: {cliente.id} | Nome: {cliente.nome} | Telefone: {cliente.telefone}')
+
 
         elif sub == 3:
 
             try:
                 idcliente = int(input(('id cliente para atualizar os dados: ')))
+                novo_nome = str(input('Novo nome: ')).strip().lower()
+                novo_telefone = input('Novo telefone: ').strip()
 
             except ValueError:
                 print('Erro ao informar os dados do cliente. ')
                 continue
 
-            cliente_service.atualizar_cliente(idcliente)
+            resultado = cliente_service.atualizar_cliente(idcliente, novo_nome, novo_telefone)
+            print(resultado['mensagem'])
+
 
         elif sub == 4:
 
@@ -53,7 +67,9 @@ def menu_cliente(cliente_service):
                 print('Erro ao informar os dados do cliente. ')
                 continue
 
-            cliente_service.remover_cliente(idcliente)
+            resultado = cliente_service.remover_cliente(idcliente)
+            print(resultado['mensagem'])
+
 
         elif sub == 5:
             print('Voltando para a pagina anterior.')

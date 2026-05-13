@@ -10,33 +10,34 @@ def buscar_cliente_por_id(idcliente, session):
 
 def cadastrar_cliente(nome, telefone):
 
+    if not nome:
+        return {'sucesso': False, 'mensagem': 'Digite um nome valido.'}
+
+    if not telefone.isdigit():
+        return {'sucesso': False, 'mensagem': 'Digite um numero de telefone valido.'}
+
     session = Session()
 
     try:
-        if not telefone.isdigit():
-            print('Digite um número de telefone válido.')
-            return
-
         cliente = session.query(Cliente).filter(Cliente.telefone == telefone).first()
 
         if cliente:
-            print('Cliente já cadastrado.')
-            return
+            return {'sucesso': False, 'mensagem': 'Cliente ja cadastrado.'}
 
-        novo_cliente = Cliente(
-            nome=nome,
-            telefone=telefone)
+        novo_cliente = Cliente(nome=nome, telefone=telefone)
 
         session.add(novo_cliente)
         session.commit()
-        print('Cliente cadastrado com sucesso!')
+
+        return {'sucesso': True, 'mensagem': 'Cliente cadastrado com sucesso!'}
 
     except Exception as erro:
         session.rollback()
-        print(f'Erro ao cadastrar cliente: {erro}')
+        return {'sucesso': False, 'mensagem': f'Erro ao cadastrar cliente: {erro}'}
 
     finally:
         session.close()
+
 
 
 def listar_clientes():
@@ -47,20 +48,24 @@ def listar_clientes():
         clientes = session.query(Cliente).all()
 
         if not clientes:
-            print('Não há clientes para mostrar.')
-            return
+            return {'sucesso': False, 'mensagem': 'Nao ha clientes para mostrar.', 'dados': []}
 
-        for cliente in clientes:
-            print(f'ID: {cliente.id} | Nome: {cliente.nome} | Telefone: {cliente.telefone}')
+        return {'sucesso': True, 'mensagem': 'Clientes encontrados.', 'dados': clientes}
 
     except Exception as erro:
-        print(f'Erro ao listar clientes: {erro}')
+        return {'sucesso': False, 'mensagem': f'Erro ao listar clientes: {erro}', 'dados': []}
 
     finally:
         session.close()
 
 
-def atualizar_cliente(idcliente):
+def atualizar_cliente(idcliente, novo_nome, novo_telefone):
+
+    if not novo_nome:
+        return {'sucesso': False, 'mensagem': 'Digite um nome valido.'}
+
+    if not novo_telefone.isdigit():
+        return {'sucesso': False, 'mensagem': 'Digite um numero valido.'}
 
     session = Session()
 
@@ -68,47 +73,40 @@ def atualizar_cliente(idcliente):
         cliente = buscar_cliente_por_id(idcliente, session)
 
         if not cliente:
-            print('Cliente não encontrado.')
-            return
-
-        novo_nome = str(input('Novo nome: ')).strip().lower()
-        novo_telefone = input('Novo telefone: ').strip()
-
-        if not novo_telefone.isdigit():
-            print('Digite um número válido.')
-            return
+            return {'sucesso': False, 'mensagem': 'Cliente nao encontrado.'}
 
         cliente.nome = novo_nome
         cliente.telefone = novo_telefone
         session.commit()
-        print('Cliente atualizado com sucesso.')
+
+        return {'sucesso': True, 'mensagem': 'Cliente atualizado com sucesso.'}
 
     except Exception as erro:
         session.rollback()
-        print(f'Erro ao atualizar cliente: {erro}')
+        return {'sucesso': False, 'mensagem': f'Erro ao atualizar cliente: {erro}'}
 
     finally:
         session.close()
 
 
 def remover_cliente(idcliente):
-
+    
     session = Session()
 
     try:
         cliente = buscar_cliente_por_id(idcliente, session)
 
         if not cliente:
-            print('Cliente não encontrado.')
-            return
+            return {'sucesso': False, 'mensagem': 'Cliente nao encontrado.'}
 
         session.delete(cliente)
         session.commit()
-        print('Cliente removido com sucesso.')
+
+        return {'sucesso': True, 'mensagem': 'Cliente removido com sucesso.'}
 
     except Exception as erro:
         session.rollback()
-        print(f'Erro ao remover cliente: {erro}')
+        return {'sucesso': False, 'mensagem': f'Erro ao remover cliente: {erro}'}
 
     finally:
         session.close()

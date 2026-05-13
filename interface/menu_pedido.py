@@ -26,11 +26,19 @@ def menu_pedido(pedido_service):
                 print(f'Erro ao criar pedido: {erro}')
                 continue
 
-            pedido_service.criar_pedido(idcliente)
+            resultado = pedido_service.criar_pedido(idcliente)
+            print(resultado['mensagem'])
 
         elif sub == 2:
 
-            pedido_service.listar_pedidos()
+            resultado = pedido_service.listar_pedidos()
+
+            if not resultado['sucesso']:
+                print(resultado['mensagem'])
+                
+            else:
+                for pedido in resultado['dados']:
+                    print(f'ID: {pedido.id} | Valor total: R${pedido.valor_total} | Status: {pedido.status} | Cliente: {pedido.id_cliente}')
 
         elif sub == 5:
 

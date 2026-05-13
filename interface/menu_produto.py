@@ -1,7 +1,7 @@
 def menu_produto(produto_service):
     while True:
         print('-'*30)
-        print(f'{"OPÇOES DE PRODUTO".center(30)}')
+        print(f'{"OPÇÕES DE PRODUTO".center(30)}')
         print('-'*30)
         print('''
 1 - cadastrar produto
@@ -28,22 +28,39 @@ def menu_produto(produto_service):
                 print(f'Erro ao cadastrar produto: {erro}')
                 continue
 
-            produto_service.cadastrar_produto(nome, preco, estoque)
+            resultado = produto_service.cadastrar_produto(nome, preco, estoque)
+
+            print(resultado['mensagem'])
+
 
         elif sub == 2: # listar produtos
 
-            produto_service.listar_produtos()
+            resultado = produto_service.listar_produtos()
+
+            if not resultado['sucesso']:
+                print(resultado['mensagem'])
+            
+            else:
+                for produto in resultado['dados']:
+                    print(f'Nome: {produto.nome} | Preço: R${produto.preco} | Estoque: {produto.estoque}')
 
         elif sub == 3: # atualizar produtos
 
             try:
                 idproduto = int(input('id produto para atualizar os dados: '))
+                novo_nome = str(input('Novo nome: ')).strip().lower()
+                novo_preco = float(input('Novo preço: '))
+                novo_estoque = int(input('Novo estoque: '))
 
             except ValueError:
                 print('Erro ao informar os dados do produto. ')
                 continue
 
-            produto_service.atualizar_produto(idproduto)
+            resultado = produto_service.atualizar_produto(idproduto, novo_nome, novo_preco, novo_estoque)
+
+            print(resultado['mensagem'])
+
+
 
         elif sub == 4: # remover produtos
 
@@ -54,7 +71,9 @@ def menu_produto(produto_service):
                 print('Erro ao informar os dados do produto. ')
                 continue
 
-            produto_service.remover_produto(idproduto)
+            resultado = produto_service.remover_produto(idproduto)
+
+            print(resultado['mensagem'])
         
         elif sub == 5:
 

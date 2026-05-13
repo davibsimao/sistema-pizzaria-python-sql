@@ -12,18 +12,17 @@ def criar_pedido(idcliente):
         cliente = buscar_cliente_por_id(idcliente, session)
 
         if not cliente:
-            print('Cliente não encontrado')
-            return
+            return {'sucesso': False, 'mensagem': 'Cliente não encontrado.'}
         
         novo_pedido = Pedido(valor_total= 0, id_cliente=idcliente, status='PENDENTE')
 
         session.add(novo_pedido)
         session.commit()
-        print('Pedido criado com sucesso!')
+        return {'sucesso': True, 'mensagem': 'Pedido criado com sucesso!'}
 
     except Exception as erro:
         session.rollback()
-        print(f'Erro ao criar pedido: {erro}')
+        return {'sucesso': False, 'mensagem': f'Erro ao criar pedido: {erro}'}
 
     finally:
         session.close()
@@ -36,14 +35,12 @@ def listar_pedidos():
         pedidos = session.query(Pedido).all()
 
         if not pedidos:
-            print('Não há pedidos pra mostrar. ')
-            return
+            return {'sucesso': False, 'mensagem': 'Não há pedidos pra mostrar.'}
         
-        for pedido in pedidos:
-            print(f'ID: {pedido.id} | valor total: {pedido.valor_total} | status: {pedido.status} | idcliente: {pedido.id_cliente} ')
-
+        return {'sucesso': True, 'mensagem': 'Pedidos encontrados', 'dados': pedidos}
+            
     except Exception as erro:
-        print(f'Erro ao listar pedidos: {erro}')
+        return {'sucesso': False, 'mensagem': 'Erro ao listar pedidos: {erro}', 'dados': []}
 
     finally:
         session.close()
