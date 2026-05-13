@@ -1,5 +1,11 @@
 # 🍕 Sistema de Gerenciamento de Pizzaria
 
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![MySQL](https://img.shields.io/badge/MySQL-Database-blue?logo=mysql)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-ORM-red)
+![Status](https://img.shields.io/badge/status-concluído-green)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 Sistema backend desenvolvido em Python para gerenciamento de clientes, produtos, pedidos e controle de estoque utilizando SQLAlchemy ORM e MySQL.
 
 O projeto foi construído com foco em:
@@ -74,8 +80,16 @@ O sistema possui validações e regras de negócio para garantir consistência d
 
 O projeto foi organizado em camadas para separar responsabilidades:
 
-```bash id="9ynr4f"
+```bash
 sistema_pizzaria/
+│
+├── assets/
+│   ├── menu.png
+│   ├── clientes.png
+│   ├── produtos.png
+│   ├── pedidos.png
+│   ├── controle-estoque.png
+│   └── modelagem-relacional.png
 │
 ├── database/
 │   └── connection.py
@@ -98,10 +112,11 @@ sistema_pizzaria/
 │   ├── produto_service.py
 │   └── pedido_service.py
 │
+├── requirements.txt
+├── README.md
 └── main.py
 ```
 
----
 
 # 🗃️ Modelagem relacional
 
