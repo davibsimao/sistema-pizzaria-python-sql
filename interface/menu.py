@@ -1,17 +1,16 @@
 from interface.menu_produto import menu_produto
 from interface.menu_cliente import menu_cliente
-
-from services import produto_service, cliente_service
+from interface.menu_pedido import menu_pedido
+from services import produto_service, cliente_service, pedido_service
 
 
 def menu():
     while True:
         print('''
 1 - Opções de produto
-2 - Opções de pedido
-3 - Opções de itens pedidos
-4 - Opções de cliente
-5 - Sair do sistema
+2 - Opções de cliente
+3 - Opções de pedido
+4 - Sair do sistema
  ''')
         try:
             opc = int(input('Digite sua opção: '))
@@ -23,10 +22,13 @@ def menu():
         if opc == 1:
             menu_produto(produto_service)
         
-        if opc == 4:
+        elif opc == 2:
             menu_cliente(cliente_service)
+        
+        elif opc == 3:
+            menu_pedido(pedido_service)
 
-        elif opc == 5:
+        elif opc == 4:
             print('Saindo do sistema.. Volte sempre.')
             break
         else:
