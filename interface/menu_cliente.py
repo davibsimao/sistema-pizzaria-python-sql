@@ -1,14 +1,14 @@
 def menu_cliente(cliente_service):
     while True:
         print('-'*30)
-        print(f'{"OPÇOES DE CLIENTE".center(30)}')
+        print(f'{"OPÇÕES DE CLIENTE".center(30)}')
         print('-'*30)
         print('''
 1 - cadastrar cliente
 2 - listar clientes
 3 - atualizar cliente
 4 - deletar cliente
-5 - voltar       
+5 - voltar a pagina anterior       
 ''')
         
         try:

@@ -8,7 +8,7 @@ def menu_produto(produto_service):
 2 - listar produto
 3 - atualizar produto
 4 - deletar produto
-5 - voltar
+5 - voltar a pagina anterior 
 ''')
         try:
             sub = int(input('Digite sua opção do produto: '))

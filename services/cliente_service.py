@@ -111,3 +111,4 @@ def remover_cliente(idcliente):
     finally:
         session.close()
 
+    

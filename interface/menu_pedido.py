@@ -1,13 +1,15 @@
 def menu_pedido(pedido_service):
     while True:
         print('-'*30)
-        print(f'{"OPÇOES DE PEDIDO".center(30)}')
+        print(f'{"OPÇÕES DE PEDIDO".center(30)}')
         print('-'*30)
         print('''
 1 - criar pedido
 2 - listar pedidos
-3 - 
-5 - voltar       
+3 - adicionar produto ao pedido
+4 - finalizar pedido
+5 - cancelar pedido
+6 - voltar a pagina anterior       
 ''')
     
         try:
@@ -38,10 +40,53 @@ def menu_pedido(pedido_service):
                 
             else:
                 for pedido in resultado['dados']:
-                    print(f'ID: {pedido.id} | Valor total: R${pedido.valor_total} | Status: {pedido.status} | Cliente: {pedido.id_cliente}')
+                    print(f'ID: {pedido.id} | Cliente: {pedido.cliente.nome} | Valor total: R${pedido.valor_total} | Status: {pedido.status}')
 
+        
+        elif sub == 3:
+
+            try:
+                idpedido = int(input('Digite o id pedido: '))
+                idproduto = int(input('Digite o id produto: '))
+                quantidade = int(input('Digite a quantidade: '))
+            
+            except Exception as erro:
+                print(f'Erro ao adicionar item ao pedido: {erro}')
+                continue
+
+            resultado = pedido_service.adicionar_item_ao_pedido(idpedido, idproduto, quantidade)
+            print(resultado['mensagem'])
+        
+        elif sub == 4:
+
+            try:
+                idpedido = int(input('Digite o id pedido: '))
+            
+            except Exception as erro:
+                print(f'Erro ao finalizar pedido: {erro}')
+                continue
+
+            resultado = pedido_service.finalizar_pedido(idpedido)
+            print(resultado['mensagem'])
+        
         elif sub == 5:
+
+            try:
+                idpedido = int(input('Digite o id pedido: '))
+            
+            except Exception as erro:
+                print(f'Erro ao cancelar pedido: {erro}')
+                continue
+
+            resultado = pedido_service.cancelar_pedido(idpedido)
+            print(resultado['mensagem'])
+
+        elif sub == 6:
 
             print('Voltando para a pagina anterior.')
             break
+        
+        else:
+            print('Erro: Digite uma opção válida.')
+            continue
             
