@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, Float, ForeignKey
+from sqlalchemy.orm import relationship
 from database.connection import Base
 
 class ItemPedido(Base):
@@ -11,3 +12,7 @@ class ItemPedido(Base):
     quantidade = Column(Integer, nullable=False)
     id_pedido = Column(Integer, ForeignKey('pedidos.id'))
     id_produto = Column(Integer, ForeignKey('produtos.id'))
+
+
+    produto = relationship('Produto', back_populates='itens_pedido')
+    pedido = relationship('Pedido', back_populates='itens')

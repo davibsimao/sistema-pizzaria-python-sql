@@ -35,12 +35,12 @@ def listar_pedidos():
         pedidos = session.query(Pedido).all()
 
         if not pedidos:
-            return {'sucesso': False, 'mensagem': 'Não há pedidos pra mostrar.'}
+            return {'sucesso': False, 'mensagem': 'Não há pedidos pra mostrar.', 'dados': []}
         
         return {'sucesso': True, 'mensagem': 'Pedidos encontrados', 'dados': pedidos}
             
     except Exception as erro:
-        return {'sucesso': False, 'mensagem': 'Erro ao listar pedidos: {erro}', 'dados': []}
+        return {'sucesso': False, 'mensagem': f'Erro ao listar pedidos: {erro}', 'dados': []}
 
     finally:
         session.close()
