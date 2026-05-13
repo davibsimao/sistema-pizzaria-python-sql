@@ -1,8 +1,8 @@
+from interface.formatters import titulo
+
 def menu_cliente(cliente_service):
     while True:
-        print('-'*30)
-        print(f'{"OPÇÕES DE CLIENTE".center(30)}')
-        print('-'*30)
+        titulo('OPÇÕES DE PRODUTO')
         print('''
 1 - cadastrar cliente
 2 - listar clientes

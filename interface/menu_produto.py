@@ -1,8 +1,8 @@
+from interface.formatters import titulo, moeda
+
 def menu_produto(produto_service):
     while True:
-        print('-'*30)
-        print(f'{"OPÇÕES DE PRODUTO".center(30)}')
-        print('-'*30)
+        titulo('OPÇÕES DE PRODUTO')
         print('''
 1 - cadastrar produto
 2 - listar produto
@@ -17,7 +17,7 @@ def menu_produto(produto_service):
             print('Digite um número válido')
             continue
 
-        if sub == 1: # cadastrar produtos
+        if sub == 1: 
 
             try:
                 nome = str(input('nome do produto: ')).lower().strip()
@@ -33,7 +33,7 @@ def menu_produto(produto_service):
             print(resultado['mensagem'])
 
 
-        elif sub == 2: # listar produtos
+        elif sub == 2: 
 
             resultado = produto_service.listar_produtos()
 
@@ -42,9 +42,9 @@ def menu_produto(produto_service):
             
             else:
                 for produto in resultado['dados']:
-                    print(f'Nome: {produto.nome} | Preço: R${produto.preco} | Estoque: {produto.estoque}')
+                    print(f'Nome: {produto.nome} | Preço: {moeda(produto.preco)} | Estoque: {produto.estoque}')
 
-        elif sub == 3: # atualizar produtos
+        elif sub == 3: 
 
             try:
                 idproduto = int(input('id produto para atualizar os dados: '))
@@ -61,8 +61,7 @@ def menu_produto(produto_service):
             print(resultado['mensagem'])
 
 
-
-        elif sub == 4: # remover produtos
+        elif sub == 4: 
 
             try:
                 idproduto = int(input('id produto que deseja remover: '))

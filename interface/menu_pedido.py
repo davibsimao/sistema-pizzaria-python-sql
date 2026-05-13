@@ -1,8 +1,8 @@
+from interface.formatters import titulo, moeda
+
 def menu_pedido(pedido_service):
     while True:
-        print('-'*30)
-        print(f'{"OPÇÕES DE PEDIDO".center(30)}')
-        print('-'*30)
+        titulo('OPÇÕES DE PEDIDO')
         print('''
 1 - criar pedido
 2 - listar pedidos
@@ -40,7 +40,7 @@ def menu_pedido(pedido_service):
                 
             else:
                 for pedido in resultado['dados']:
-                    print(f'ID: {pedido.id} | Cliente: {pedido.cliente.nome} | Valor total: R${pedido.valor_total} | Status: {pedido.status}')
+                    print(f'ID: {pedido.id} | Cliente: {pedido.cliente.nome} | Valor total: {moeda(pedido.valor_total)} | Status: {pedido.status}')
 
         
         elif sub == 3:
