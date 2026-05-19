@@ -159,6 +159,25 @@ def cancelar_pedido(idpedido):
     finally:
         session.close()
 
+def buscar_pedido(idpedido):
+
+    session = Session ()
+
+    try:
+        pedido = session.query(Pedido).filter(Pedido.id==idpedido).first()
+
+        if not pedido:
+            return {'sucesso': False, 'mensagem': 'Não há pedidos pra mostrar.', 'dados': None}
+        
+        return {'sucesso': True, 'mensagem': 'Pedido encontrado.', 'dados': pedido}
+    
+    except Exception as erro:
+        return {'sucesso': False, 'mensagem': f'Erro ao buscar pedido: {erro}', 'dados': None}
+
+    finally:
+        session.close()
+
+
 
 
         

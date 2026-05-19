@@ -117,3 +117,21 @@ def remover_produto(idproduto):
 
     finally:
         session.close()
+
+def buscar_produto(idproduto):
+
+    session = Session()
+
+    try:
+        produto = session.query(Produto).filter(Produto.id==idproduto).first()
+
+        if not produto:
+            return {'sucesso': False, 'mensagem': 'Produto não encontrado.'}
+
+        return {'sucesso': True, 'mensagem': 'Produto encontrado.', 'dados': produto}
+    
+    except Exception as erro:
+        return {'sucesso': False, 'mensagem': f'Erro ao buscar produto: {erro}', 'dados': None}
+
+    finally:
+        session.close()

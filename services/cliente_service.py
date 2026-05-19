@@ -111,4 +111,20 @@ def remover_cliente(idcliente):
     finally:
         session.close()
 
+def buscar_cliente(idcliente):
+
+    session = Session() 
+
+    try:
+        cliente = session.query(Cliente).filter(Cliente.id==idcliente).first()
+
+        if not cliente:
+            return {'sucesso': False, 'mensagem': 'Cliente não encontrado.', 'dados': None}
+        
+        return {'sucesso': True, 'mensagem': 'Cliente encontrado.', 'dados': cliente}
     
+    except Exception as erro:
+        return {'sucesso': False, 'mensagem': f'Erro ao buscar cliente: {erro}', 'dados': None}
+
+    finally:
+        session.close()

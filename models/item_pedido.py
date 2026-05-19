@@ -10,8 +10,8 @@ class ItemPedido(Base):
     preco_unitario = Column(Float, nullable=False)
     subtotal = Column(Float, nullable=False)
     quantidade = Column(Integer, nullable=False)
-    id_pedido = Column(Integer, ForeignKey('pedidos.id'))
-    id_produto = Column(Integer, ForeignKey('produtos.id'))
+    id_pedido = Column(Integer, ForeignKey('pedidos.id'), nullable=False)
+    id_produto = Column(Integer, ForeignKey('produtos.id'), nullable=False)
 
 
     produto = relationship('Produto', back_populates='itens_pedido')
