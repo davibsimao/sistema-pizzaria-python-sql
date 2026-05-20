@@ -4,7 +4,9 @@ from typing import List
 from schemas.produto_schema import ProdutoCreate, ProdutoResponse
 from services import produto_service
 
-produtos_router = APIRouter(prefix= '/produtos', tags=['Produtos'])
+
+produtos_router = APIRouter(prefix='/produtos', tags=['Produtos'])
+
 
 @produtos_router.post('/')
 async def criar_produto(produto_schema: ProdutoCreate):
@@ -13,12 +15,17 @@ async def criar_produto(produto_schema: ProdutoCreate):
         produto_schema.preco,
         produto_schema.estoque
     )
+
+    if not resultado['sucesso']:
+        raise HTTPException(status_code=400, detail=resultado['mensagem'])
+
     return {
         'sucesso': resultado['sucesso'],
         'mensagem': resultado['mensagem']
     }
-    
-@produtos_router.get('/', response_model= List[ProdutoResponse])
+
+
+@produtos_router.get('/', response_model=List[ProdutoResponse])
 async def lista_de_produtos():
     resultado = produto_service.listar_produtos()
 
@@ -31,8 +38,9 @@ async def buscar_produto_por_id(idproduto: int):
 
     if not resultado['sucesso']:
         raise HTTPException(status_code=404, detail=resultado['mensagem'])
-    
+
     return resultado['dados']
+
 
 @produtos_router.put('/{idproduto}')
 async def atualizar_dados_produto(idproduto: int, produto_schema: ProdutoCreate):
@@ -44,12 +52,13 @@ async def atualizar_dados_produto(idproduto: int, produto_schema: ProdutoCreate)
     )
 
     if not resultado['sucesso']:
-        raise HTTPException(status_code=404, detail=resultado['mensagem'])
+        raise HTTPException(status_code=400, detail=resultado['mensagem'])
 
     return {
         'sucesso': resultado['sucesso'],
         'mensagem': resultado['mensagem']
     }
+
 
 @produtos_router.delete('/{idproduto}')
 async def deletar_produto(idproduto: int):
@@ -62,5 +71,3 @@ async def deletar_produto(idproduto: int):
         'sucesso': resultado['sucesso'],
         'mensagem': resultado['mensagem']
     }
-
-

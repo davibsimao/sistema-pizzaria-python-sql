@@ -15,6 +15,9 @@ async def criar_cliente(cliente_schema: ClienteCreate):
         cliente_schema.telefone
     )
 
+    if not resultado['sucesso']:
+        raise HTTPException(status_code=400, detail=resultado['mensagem'])
+
     return {
         'sucesso': resultado['sucesso'],
         'mensagem': resultado['mensagem']
@@ -29,7 +32,7 @@ async def lista_de_clientes():
 
 
 @clientes_router.get('/{idcliente}', response_model=ClienteResponse)
-async def buscar_cliente__por_id(idcliente: int):
+async def buscar_cliente_por_id(idcliente: int):
     resultado = cliente_service.buscar_cliente(idcliente)
 
     if not resultado['sucesso']:
@@ -47,7 +50,7 @@ async def atualizar_dados_cliente(idcliente: int, cliente_schema: ClienteCreate)
     )
 
     if not resultado['sucesso']:
-        raise HTTPException(status_code=404, detail=resultado['mensagem'])
+        raise HTTPException(status_code=400, detail=resultado['mensagem'])
 
     return {
         'sucesso': resultado['sucesso'],
